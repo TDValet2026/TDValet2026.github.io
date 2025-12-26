@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trash Day Valet - Making Trash Day Simple & Safe for Seniors in Holiday City Carefree</title>
+    <meta name="description" content="Trash Day Valet provides reliable trash and recycling valet service for seniors in Holiday City Carefree, Toms River, NJ. We handle the heavy lifting so you don't have to.">
+    <style>
+        /* Senior-friendly design: High contrast, large fonts, simple layout, calming colors */
+        body {
+            font-family: 'Arial', sans-serif;
+            font-size: 18px;
+            line-height: 1.6;
+            color: #000;
+            background-color: #f5f5f5;
+            margin: 0;
+            padding: 0;
+        }
+        header {
+            background-color: #007bff; /* Trustworthy blue */
+            color: white;
+            text-align: center;
+            padding: 40px 20px;
+        }
+        h1 {
+            font-size: 36px;
+            margin: 0;
+        }
+        h2 {
+            font-size: 30px;
+            color: #007bff;
+            text-align: center;
+            margin-top: 40px;
+        }
+        section {
+            max-width: 900px;
+            margin: 40px auto;
+            padding: 20px;
+            background: white;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            border-radius: 8px;
+        }
+        .hero {
+            background: url('https://via.placeholder.com/1200x600?text=Senior+Relaxing+in+Garden') no-repeat center/cover;
+            color: white;
+            text-align: center;
+            padding: 100px 20px;
+        }
+        .pricing {
+            display: flex;
+            justify-content: space-around;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+        .plan {
+            background: #e9f7ff;
+            padding: 20px;
+            border-radius: 8px;
+            text-align: center;
+            flex: 1;
+            min-width: 250px;
+        }
+        .best-value {
+            border: 3px solid #007bff;
+        }
+        button, input[type="submit"] {
+            font-size: 20px;
+            padding: 15px 30px;
+            background: #28a745;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        button:hover, input[type="submit"]:hover {
+            background: #218838;
+        }
+        form {
+            display: grid;
+            gap: 15px;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        label {
+            font-weight: bold;
+        }
+        input, select, textarea {
+            font-size: 18px;
+            padding: 10px;
+            width: 100%;
+            box-sizing: border-box;
+        }
+        footer {
+            background: #007bff;
+            color: white;
+            text-align: center;
+            padding: 20px;
+            margin-top: 40px;
+        }
+        nav {
+            background: #343a40;
+            padding: 15px;
+            text-align: center;
+        }
+        nav a {
+            color: white;
+            font-size: 20px;
+            margin: 0 15px;
+            text-decoration: none;
+        }
+        nav a:hover {
+            text-decoration: underline;
+        }
+        @media (max-width: 768px) {
+            .pricing { flex-direction: column; }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>Trash Day Valet</h1>
+        <p>Making Trash Day Simple and Safe for Seniors in Holiday City Carefree, Toms River, NJ 08757</p>
+    </header>
+
+    <nav>
+        <a href="#home">Home</a>
+        <a href="#service">Our Service</a>
+        <a href="#pricing">Pricing</a>
+        <a href="#about">About</a>
+        <a href="#agreement">Service Agreement</a>
+        <a href="#signup">Sign Up</a>
+        <a href="#contact">Contact</a>
+    </nav>
+
+    <section id="home" class="hero">
+        <h2>Let Us Handle the Heavy Lifting</h2>
+        <p>No more struggling with heavy trash cans. We take them out and bring them back – safely and reliably.</p>
+        <button onclick="document.getElementById('signup').scrollIntoView();">Sign Up Today</button>
+    </section>
+
+    <section id="service">
+        <h2>Our Service</h2>
+        <p>We provide valet service for trash and recycling in Holiday City Carefree.</p>
+        <ul>
+            <li><strong>Trash Day (Thursday pickup):</strong> We take out accessible trash cans after 4pm every Wednesday night and return them empty on Thursday shortly after pickup.</li>
+            <li><strong>Recycling Weeks (every other week):</strong> On recycling weeks, we take out recycling cans after 4pm Tuesday, return them Wednesday after pickup, then take out trash cans Wednesday night for Thursday pickup, and return trash Thursday after pickup.</li>
+            <li>Cans must be accessible (e.g., near driveway or garage – no locked gates or steep steps).</li>
+            <li>Reliable, background-checked service focused on senior safety.</li>
+        </ul>
+        <p>Note: Toms River trash pickup schedules may vary; we adjust to official township days.</p>
+    </section>
+
+    <section id="pricing">
+        <h2>Simple Subscription Pricing (Billed Weekly)</h2>
+        <div class="pricing">
+            <div class="plan">
+                <h3>Bi-Weekly Billing</h3>
+                <p><strong>$17.95 per week</strong></p>
+                <p>Pay every two weeks.</p>
+            </div>
+            <div class="plan">
+                <h3>Month-to-Month</h3>
+                <p><strong>$16.95 per week</strong></p>
+                <p>Great flexibility.</p>
+            </div>
+            <div class="plan best-value">
+                <h3>Quarterly (Best Value)</h3>
+                <p><strong>$14.95 per week</strong></p>
+                <p>Prepay for 3 months and save!</p>
+            </div>
+        </div>
+    </section>
+
+    <section id="about">
+        <h2>About Us</h2>
+        <p>I moved to Holiday City Carefree to help my grandfather through his health challenges. While here, I couldn't help but notice how many seniors with mobility issues struggle to haul those big, awkward, heavy trash and recycling cans back and forth.</p>
+        <p>I started Trash Day Valet to make life a bit more manageable – and most importantly, <strong>SAFER</strong> – for our neighbors. This service removes a real burden and reduces the risk of falls or injury on trash day.</p>
+        <p>We're local, reliable, and dedicated to serving our senior community.</p>
+    </section>
+
+    <section id="agreement">
+        <h2>Service Agreement</h2>
+        <p><strong>No BS – Plain English Agreement</strong></p>
+        <p>Trash Day Valet provides valet service for your trash and recycling cans as described above. Service is subscription-based with automatic weekly billing (or prepaid quarterly).</p>
+        <p>You may cancel anytime with 7 days notice via email or phone – no fees.</p>
+        <p>Cans must be accessible for service. If inaccessible on a scheduled day, no refund for that week.</p>
+        <p><strong>Liability:</strong> You (the client) will never be held liable for any injury sustained by me (the owner) or anyone I employ while on your property. I assume 100% risk for any incidents during service.</p>
+        <p>By signing up, you agree to these terms. Full payment processed securely via Stripe.</p>
+    </section>
+
+    <section id="signup">
+        <h2>Simple Sign Up</h2>
+        <p>Fill out the form below. Payment is secure and easy – just enter your card once for automatic billing.</p>
+        <!-- In a real site, integrate Stripe Checkout or Elements here for secure payments -->
+        <form action="https://your-payment-processor-endpoint.com" method="POST">
+            <label for="name">Full Name</label>
+            <input type="text" id="name" name="name" required>
+
+            <label for="address">Full Address (in Holiday City Carefree)</label>
+            <input type="text" id="address" name="address" required>
+
+            <label for="email">Email</label>
+            <input type="email" id="email" name="email" required>
+
+            <label for="phone">Phone Number</label>
+            <input type="tel" id="phone" name="phone" required>
+
+            <label for="plan">Choose Your Plan</label>
+            <select id="plan" name="plan" required>
+                <option value="">Select a plan</option>
+                <option value="biweekly">$17.95/week (Bi-Weekly Billing)</option>
+                <option value="monthly">$16.95/week (Month-to-Month)</option>
+                <option value="quarterly">$14.95/week (Quarterly Prepay - Best Value)</option>
+            </select>
+
+            <label for="notes">Notes (e.g., where cans are located)</label>
+            <textarea id="notes" name="notes" rows="4"></textarea>
+
+            <p>Payment securely processed by Stripe. Card billed automatically based on plan.</p>
+            <input type="submit" value="Sign Up & Pay Securely">
+        </form>
+        <p style="text-align:center; margin-top:20px;">Questions? Call or text: (Your Phone Number)</p>
+    </section>
+
+    <section id="contact">
+        <h2>Contact Us</h2>
+        <p>Email: your@email.com</p>
+        <p>Phone: (Your Phone Number)</p>
+        <p>Serving only Holiday City Carefree, Toms River, NJ 08757</p>
+    </section>
+
+    <footer>
+        <p>&copy; 2025 Trash Day Valet. All rights reserved. Making life safer, one trash day at a time.</p>
+    </footer>
+
+</body>
+</html>
