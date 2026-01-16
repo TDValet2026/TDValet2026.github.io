@@ -114,6 +114,63 @@
         @media (max-width: 768px) {
             .pricing { flex-direction: column; }
         }
+/* --- Two-step signup --- */
+.step {
+    background: #ffffff;
+    border-radius: 8px;
+    padding: 18px;
+    box-shadow: 0 1px 6px rgba(0,0,0,0.08);
+}
+
+.step-title {
+    font-size: 22px;
+    margin: 0 0 10px 0;
+    color: #007bff;
+    text-align: left;
+}
+
+.step-note {
+    margin: 0 0 14px 0;
+}
+
+.hidden {
+    display: none;
+}
+
+.secondary-btn {
+    background: #343a40;
+    margin-top: 8px;
+}
+
+.secondary-btn:hover {
+    background: #23272b;
+}
+
+.inline-help {
+    font-size: 16px;
+    color: #333;
+    margin: 6px 0 0 0;
+}
+
+.progress {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+    margin: 0 0 18px 0;
+}
+
+.progress span {
+    display: inline-block;
+    padding: 8px 12px;
+    border-radius: 999px;
+    background: #e9ecef;
+    font-weight: bold;
+}
+
+.progress .active {
+    background: #007bff;
+    color: #fff;
+}
     </style>
 </head>
 <body>
@@ -242,38 +299,69 @@ It's a preventive safety measure that removes a real burden and helps you stay i
     </section>
 
 <section id="signup">
-        <h2>Simple Sign Up</h2>
-        <p>Fill out the form below. Payment is secure and easy. Just enter your card once for automatic billing.</p>
-        <!-- In a real site, integrate Stripe Checkout or Elements here for secure payments -->
-        <form action="https://your-payment-processor-endpoint.com" method="POST">
+    <h2>Simple Sign Up</h2>
+    <p style="text-align:center; max-width:760px; margin: 0 auto 18px auto;">
+        Step 1 takes less than 30 seconds. Then you’ll choose your plan and set up secure billing.
+    </p>
+
+    <div class="progress" aria-label="Signup progress">
+        <span id="prog1" class="active">Step 1: Reserve</span>
+        <span id="prog2">Step 2: Plan & Payment</span>
+    </div>
+
+    <!-- One form, two steps -->
+    <form id="signupForm" action="https://your-payment-processor-endpoint.com" method="POST">
+        <!-- STEP 1 -->
+        <div id="step1" class="step">
+            <p class="step-title">Step 1 — Reserve My Spot</p>
+            <p class="step-note">Just the basics so we can confirm you’re in our service area and reach you if needed.</p>
+
             <label for="name">Full Name</label>
             <input type="text" id="name" name="name" required>
 
             <label for="address">Full Address (in Holiday City Carefree)</label>
             <input type="text" id="address" name="address" required>
 
-            <label for="email">Email</label>
-            <input type="email" id="email" name="email" required>
-
             <label for="phone">Phone Number</label>
             <input type="tel" id="phone" name="phone" required>
+
+            <p class="inline-help"><strong>No email required yet.</strong> We keep this simple.</p>
+
+            <button type="button" id="reserveBtn">Reserve My Spot</button>
+            <p class="inline-help" style="text-align:center;">Prefer to sign up by phone? Call or text: <strong>(732) 440-9093</strong></p>
+        </div>
+
+        <!-- STEP 2 -->
+        <div id="step2" class="step hidden">
+            <p class="step-title">Step 2 — Choose Plan & Set Up Secure Billing</p>
+            <p class="step-note">Payment is securely processed. You can cancel anytime with 7 days notice.</p>
+
+            <label for="email">Email (for receipts)</label>
+            <input type="email" id="email" name="email" required>
 
             <label for="plan">Choose Your Plan</label>
             <select id="plan" name="plan" required>
                 <option value="">Select a plan</option>
-                <option value="weekly">$15.95/week Flexible Option (Weekly)</option>
-                <option value="monthly">$13.95/week Most Popular (Monthly)</option> 
-                <option value="quarterly">$11.95/week Best Value (Quarterly)</option>
+                <option value="biweekly">$14.95/week (Bi-Weekly Billing)</option>
+                <option value="monthly">$13.95/week (Month-to-Month)</option>
+                <option value="quarterly">$11.95/week (Quarterly Prepay - Best Value)</option>
             </select>
 
-            <label for="notes">Notes (e.g., where cans are located)</label>
+            <label for="notes">Notes (optional: where cans are located)</label>
             <textarea id="notes" name="notes" rows="4"></textarea>
+
+            <p class="inline-help">
+                <strong>Important:</strong> We only handle your cans. We never enter your home.
+            </p>
 
             <p>Payment securely processed by Stripe. Card billed automatically based on plan.</p>
             <input type="submit" value="Sign Up & Pay Securely">
-        </form>
-        <p style="text-align:center; margin-top:20px;">Questions? Call or text: (732) 440-9093</p>
-    </section>
+
+            <button type="button" id="backBtn" class="secondary-btn">Back</button>
+            <p class="inline-help" style="text-align:center; margin-top:10px;">Questions? Call or text: <strong>(732) 440-9093</strong></p>
+        </div>
+    </form>
+</section>
 
     <section id="contact">
         <h2>Contact Us</h2>
@@ -286,5 +374,55 @@ It's a preventive safety measure that removes a real burden and helps you stay i
         <p>&copy; 2025 Trash Day Valet. All rights reserved. Making life safer, one trash day at a time.</p>
     </footer>
 
+<script>
+(function () {
+    const step1 = document.getElementById('step1');
+    const step2 = document.getElementById('step2');
+
+    const reserveBtn = document.getElementById('reserveBtn');
+    const backBtn = document.getElementById('backBtn');
+
+    const prog1 = document.getElementById('prog1');
+    const prog2 = document.getElementById('prog2');
+
+    const nameEl = document.getElementById('name');
+    const addressEl = document.getElementById('address');
+    const phoneEl = document.getElementById('phone');
+
+    function setStep(stepNum) {
+        if (stepNum === 1) {
+            step1.classList.remove('hidden');
+            step2.classList.add('hidden');
+            prog1.classList.add('active');
+            prog2.classList.remove('active');
+            step1.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        } else {
+            step1.classList.add('hidden');
+            step2.classList.remove('hidden');
+            prog1.classList.remove('active');
+            prog2.classList.add('active');
+            step2.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+    }
+
+    function validateStep1() {
+        // Use native validation messages (senior-friendly, built-in)
+        if (!nameEl.checkValidity()) { nameEl.reportValidity(); return false; }
+        if (!addressEl.checkValidity()) { addressEl.reportValidity(); return false; }
+        if (!phoneEl.checkValidity()) { phoneEl.reportValidity(); return false; }
+        return true;
+    }
+
+    reserveBtn.addEventListener('click', function () {
+        if (validateStep1()) {
+            setStep(2);
+        }
+    });
+
+    backBtn.addEventListener('click', function () {
+        setStep(1);
+    });
+})();
+</script>
 </body>
 </html>
