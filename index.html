@@ -121,45 +121,37 @@
     padding: 18px;
     box-shadow: 0 1px 6px rgba(0,0,0,0.08);
 }
-
 .step-title {
     font-size: 22px;
     margin: 0 0 10px 0;
     color: #007bff;
     text-align: center;
 }
-
 .step-note {
     margin: 0 0 14px 0;
 }
-
 .hidden {
     display: none;
 }
-
 .secondary-btn {
     background: #343a40;
     margin-top: 8px;
 }
-
 .secondary-btn:hover {
     background: #23272b;
 }
-
 .inline-help {
     font-size: 16px;
     color: #333;
     margin: 10px 0 0 0;
     text-align: center;
 }
-
 .progress {
     display: flex;
     gap: 10px;
     justify-content: center;
     margin: 0 0 18px 0;
 }
-
 .progress span {
     display: inline-block;
     padding: 8px 12px;
@@ -167,22 +159,18 @@
     background: #e9ecef;
     font-weight: bold;
 }
-
 .progress .active {
     background: #007bff;
     color: #fff;
 }
-
 .center-btn {
     display: flex;
     justify-content: center;
 }
-
 /* Hover expansion for primary action button */
 #reserveBtn {
     transition: transform 0.18s ease, box-shadow 0.18s ease;
 }
-
 #reserveBtn:hover {
     transform: scale(1.06);
     box-shadow: 0 6px 14px rgba(0, 0, 0, 0.2);
@@ -197,10 +185,41 @@
     text-align: center;
     font-size: 17px;
 }
-
 .security-line strong {
     display: block;
     margin-bottom: 6px;
+}
+/* Hover expansion for Step 2 finish button */
+#finishBtn {
+    transition: transform 0.18s ease, box-shadow 0.18s ease;
+}
+#finishBtn:hover {
+    transform: scale(1.04);
+    box-shadow: 0 6px 14px rgba(0, 0, 0, 0.2);
+}
+/* Processing / confirmation message */
+.submit-message {
+    margin: 14px 0 0 0;
+    padding: 14px;
+    border-radius: 8px;
+    background: #e9f7ff;
+    border: 2px solid #bfe6ff;
+    font-size: 17px;
+    text-align: center;
+}
+.submit-message strong {
+    display: block;
+    margin-bottom: 6px;
+}
+/* Optional: make the phone fallback visually clear */
+.phone-fallback {
+    margin-top: 12px;
+    padding: 12px;
+    background: #f8f9fa;
+    border: 1px solid #e1e5ea;
+    border-radius: 8px;
+    text-align: center;
+    font-size: 16px;
 }
     </style>
 </head>
@@ -368,6 +387,9 @@ It's a preventive safety measure that removes a real burden and helps you stay i
         <div id="step2" class="step hidden">
             <p class="step-title">Step 2: Choose Plan & Set Up Secure Billing</p>
             <p class="step-note">Payment is securely processed. You can cancel anytime with 7 days notice.</p>
+	<div class="phone-fallback">
+    Prefer to sign up by phone instead of online? Call or text: <strong>(732) 440-9093</strong>
+</div>
 
             <label for="email">Email (for receipts)</label>
             <input type="email" id="email" name="email" required>
@@ -393,7 +415,12 @@ It's a preventive safety measure that removes a real burden and helps you stay i
     Your card information is never stored on this website.
 </div>
 
-<input type="submit" value="Finish Sign Up (Secure Payment)">
+<input id="finishBtn" type="submit" value="Finish Sign Up (Secure Payment)">
+
+<div id="submitMsg" class="submit-message hidden" role="status" aria-live="polite">
+    <strong>Submitting…</strong>
+    Please do not close this page. If you prefer, you can call or text <strong>(732) 440-9093</strong> and we’ll sign you up by phone.
+</div>
 
             <button type="button" id="backBtn" class="secondary-btn">Back</button>
             <p class="inline-help" style="text-align:center; margin-top:10px;">Questions? Call or text: <strong>(732) 440-9093</strong></p>
@@ -423,9 +450,17 @@ It's a preventive safety measure that removes a real burden and helps you stay i
     const prog1 = document.getElementById('prog1');
     const prog2 = document.getElementById('prog2');
 
+    const form = document.getElementById('signupForm');
+
     const nameEl = document.getElementById('name');
     const addressEl = document.getElementById('address');
     const phoneEl = document.getElementById('phone');
+
+    const emailEl = document.getElementById('email');
+    const planEl = document.getElementById('plan');
+
+    const finishBtn = document.getElementById('finishBtn');
+    const submitMsg = document.getElementById('submitMsg');
 
     function setStep(stepNum) {
         if (stepNum === 1) {
@@ -444,21 +479,115 @@ It's a preventive safety measure that removes a real burden and helps you stay i
     }
 
     function validateStep1() {
-        // Use native validation messages (senior-friendly, built-in)
         if (!nameEl.checkValidity()) { nameEl.reportValidity(); return false; }
         if (!addressEl.checkValidity()) { addressEl.reportValidity(); return false; }
         if (!phoneEl.checkValidity()) { phoneEl.reportValidity(); return false; }
         return true;
     }
 
+    function validateStep2Basics() {
+        if (!emailEl.checkValidity()) { emailEl.reportValidity(); return false; }
+        if (!planEl.checkValidity()) { planEl.reportValidity(); return false; }
+        return true;
+    }
+
     reserveBtn.addEventListener('click', function () {
-        if (validateStep1()) {
-            setStep(2);
-        }
+        if (validateStep1()) setStep(2);
     });
 
     backBtn.addEventListener('click', function () {
+        // Reset any submission UI when going back
+        submitMsg.classList.add('hidden');
+        finishBtn.disabled = false;
+        finishBtn.value = "Finish Sign Up (Secure Payment)";
         setStep(1);
+    });
+
+    /* -----------------------------
+       Stripe Checkout-ready wiring
+       -----------------------------
+       This is NOT active by default.
+       To enable later:
+       1) Add Stripe.js script tag in <head>:
+          <script src="https://js.stripe.com/v3/"></script>
+       2) Set USE_STRIPE_CHECKOUT = true
+       3) Replace STRIPE_PUBLISHABLE_KEY and PRICE IDs
+       4) Create a tiny backend endpoint to create a Checkout Session
+          (recommended) OR use Payment Links (simpler).
+    */
+    const USE_STRIPE_CHECKOUT = false;
+
+    // Optional: map your plans to Stripe Price IDs (placeholders)
+    const PRICE_ID_MAP = {
+        weekly: "price_REPLACE_WEEKLY",
+        monthly: "price_REPLACE_MONTHLY",
+        quarterly: "price_REPLACE_QUARTERLY"
+    };
+
+    async function startStripeCheckout() {
+        // This is a placeholder approach.
+        // Best practice: call YOUR backend to create a Checkout Session and return sessionId.
+        // Example backend response: { sessionId: "cs_test_..." }
+
+        const chosenPlan = planEl.value;
+        const priceId = PRICE_ID_MAP[chosenPlan];
+
+        if (!priceId) {
+            alert("Please select a plan.");
+            return;
+        }
+
+        // Example: call your backend endpoint to create session
+        // const res = await fetch("/create-checkout-session", {
+        //   method: "POST",
+        //   headers: { "Content-Type": "application/json" },
+        //   body: JSON.stringify({
+        //     name: nameEl.value,
+        //     address: addressEl.value,
+        //     phone: phoneEl.value,
+        //     email: emailEl.value,
+        //     plan: chosenPlan,
+        //     priceId: priceId
+        //   })
+        // });
+        // const data = await res.json();
+        // const stripe = Stripe("pk_live_REPLACE_ME");
+        // await stripe.redirectToCheckout({ sessionId: data.sessionId });
+
+        alert("Stripe Checkout is not enabled yet. This site is currently using the basic form submit endpoint.");
+    }
+
+    // On submit: show message, disable button, then either trigger Stripe Checkout or allow normal submit.
+    form.addEventListener('submit', function (e) {
+        // If Step 2 isn't visible, prevent submit
+        if (step2.classList.contains('hidden')) {
+            e.preventDefault();
+            setStep(2);
+            return;
+        }
+
+        if (!validateStep2Basics()) {
+            e.preventDefault();
+            return;
+        }
+
+        // Show processing reassurance immediately
+        submitMsg.classList.remove('hidden');
+        finishBtn.disabled = true;
+        finishBtn.value = "Submitting…";
+
+        if (USE_STRIPE_CHECKOUT) {
+            e.preventDefault(); // prevent normal submit
+            startStripeCheckout()
+              .catch(function () {
+                  // If anything fails, re-enable button and keep reassurance visible
+                  finishBtn.disabled = false;
+                  finishBtn.value = "Finish Sign Up (Secure Payment)";
+              });
+        } else {
+            // Normal form submission continues to your action URL.
+            // No need to preventDefault.
+        }
     });
 })();
 </script>
