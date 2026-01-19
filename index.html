@@ -385,6 +385,7 @@ It's a preventive safety measure that removes a real burden and helps you stay i
 
     <!-- One form, two steps -->
     <form id="signupForm" action="https://your-payment-processor-endpoint.com" method="POST">
+	<input type="hidden" name="source" value="website">
         <!-- STEP 1 -->
         <div id="step1" class="step">
             <p class="step-title">Step 1: Reserve Valet</p>
@@ -397,7 +398,14 @@ It's a preventive safety measure that removes a real burden and helps you stay i
             <input type="text" id="address" name="address" required>
 
             <label for="phone">Phone Number</label>
-            <input type="tel" id="phone" name="phone" required>
+            <input
+    type="tel"
+    id="phone"
+    name="phone"
+    required
+    pattern="[0-9]{10}"
+    placeholder="10-digit number (no dashes)"
+>
 
             <p class="inline-help"><strong>No email required yet.</strong> We keep this simple.</p>
 
