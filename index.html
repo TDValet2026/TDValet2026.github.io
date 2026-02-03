@@ -6,7 +6,12 @@
     <title>Trash Day Valet - Making Trash Day Simple & Safe for Seniors in Holiday City Carefree</title>
     <meta name="description" content="Trash Day Valet provides reliable trash and recycling valet service for seniors in Holiday City Carefree, Toms River, NJ. We handle the heavy lifting so you don't have to.">
     <style>
-        /* Senior-friendly design: High contrast, large fonts, simple layout, calming colors */
+        
+        :root {
+            /* Set this to your final hero photo URL or a local file path like url('img/hero.jpg') */
+            --hero-bg: url('https://via.placeholder.com/1400x800?text=Replace+Hero+Photo');
+        }
+/* Senior-friendly design: High contrast, large fonts, simple layout, calming colors */
         body {
             font-family: 'Arial', sans-serif;
             font-size: 18px;
@@ -41,7 +46,8 @@
             border-radius: 8px;
         }
         .hero {
-            background: url('https://via.placeholder.com/1200x600?text=Senior+Relaxing+in+Garden') no-repeat center/cover;
+            /* HERO IMAGE: replace the URL below with your chosen photo */
+            background: linear-gradient(rgba(0,0,0,0.45), rgba(0,0,0,0.45)), var(--hero-bg) no-repeat center/cover;
             color: white;
             text-align: center;
             padding: 100px 20px;
@@ -221,7 +227,52 @@
     text-align: center;
     font-size: 16px;
 }
-    </style>
+    
+        .plan-buttons{ display:grid; gap:12px; margin-top:12px; }
+        .pay-btn{
+            display:block;
+            text-align:center;
+            padding:16px 18px;
+            border-radius:10px;
+            background:#28a745;
+            color:#fff;
+            font-size:22px;
+            font-weight:bold;
+            text-decoration:none;
+        }
+        .pay-btn:hover{ filter:brightness(0.95); }
+        .pay-btn.best{ border:3px solid #007bff; }
+
+        .sticky-cta{
+            position:fixed; left:0; right:0; bottom:0;
+            display:none;
+            gap:10px; justify-content:space-around;
+            padding:12px; background:#fff; border-top:2px solid #ddd;
+            z-index:9999;
+        }
+        .sticky-cta a{
+            flex:1; text-align:center; padding:14px 0;
+            border-radius:10px; background:#007bff; color:#fff;
+            font-size:18px; font-weight:bold; text-decoration:none;
+        }
+        .sticky-cta a:hover{ filter:brightness(0.95); }
+
+        @media (max-width: 768px){
+            body{ padding-bottom:84px; } /* room for sticky bar */
+            .sticky-cta{ display:flex; }
+        }
+
+</style>
+
+    <!-- Analytics (GA4) - replace G-XXXXXXXXXX with your Measurement ID -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-XXXXXXXXXX', { 'anonymize_ip': true });
+    </script>
+
 </head>
 <body>
 
@@ -231,11 +282,9 @@
     </header>
 
     <nav>
-        <a href="#home">Home</a>
         <a href="#about">About</a>
         <a href="#service">Our Service</a>
         <a href="#pricing">Pricing</a>
-        <a href="#agreement">Service Agreement</a>
         <a href="#signup">Sign Up</a>
         <a href="#contact">Contact</a>
     </nav>
@@ -354,7 +403,7 @@ It's a preventive safety measure that removes a real burden and helps you stay i
             <h3>What Neighbors Say</h3>
 
             <div class="testimonial">
-                <p>"I don't worry about trash day anymore. It's just handled."</p>
+                <p>"I don't worry about taking a spill on trash day anymore. It's been such a huge relief for me."</p>
                 <p class="byline">- Holiday City Resident</p>
             </div>
 
@@ -364,8 +413,8 @@ It's a preventive safety measure that removes a real burden and helps you stay i
             </div>
 
             <div class="testimonial" style="margin-bottom:0;">
-                <p>"Simple service. Shows up when they say they will."</p>
-                <p class="byline">- Local Senior</p>
+                <p>"Wonderful service. Shows up when they say they will, and I no longer need to worry about my parents hauling big awkward trash cans back and forth."</p>
+                <p class="byline">- Son of Local Senior</p>
             </div>
         </div>
     </div>
@@ -396,7 +445,7 @@ It's a preventive safety measure that removes a real burden and helps you stay i
     </div>
 
     <!-- One form, two steps -->
-    <form id="signupForm" action="https://your-payment-processor-endpoint.com" method="POST">
+    <form id="signupForm" action="#" method="POST">
 	<input type="hidden" name="source" value="website">
         <!-- STEP 1 -->
         <div id="step1" class="step">
@@ -415,8 +464,9 @@ It's a preventive safety measure that removes a real burden and helps you stay i
     id="phone"
     name="phone"
     required
-    pattern="[0-9]{10}"
-    placeholder="10-digit number (no dashes)"
+    inputmode="tel"
+    autocomplete="tel"
+    placeholder="(732) 555-1234"
 >
 
             <p class="inline-help"><strong>No email required yet.</strong> We keep this simple.</p>
@@ -430,21 +480,23 @@ It's a preventive safety measure that removes a real burden and helps you stay i
         <!-- STEP 2 -->
         <div id="step2" class="step hidden">
             <p class="step-title">Step 2: Choose Plan & Set Up Secure Billing</p>
-            <p class="step-note">Payment is securely processed. You can cancel anytime with 7 days notice.</p>
+            <p class="step-note">Payment is securely processed. You can cancel anytime.</p>
 	<div class="phone-fallback">
     Prefer to sign up by phone instead of online? Call or text: <strong>(732) 440-9093</strong>
 </div>
 
             <label for="email">Email (for receipts)</label>
-            <input type="email" id="email" name="email" required>
+            <input type="email" id="email" name="email" autocomplete="email" placeholder="Optional (for receipts)">
 
-            <label for="plan">Choose Your Plan</label>
-            <select id="plan" name="plan" required>
-                <option value="">Select a plan</option>
-                <option value="weekly">$14.95/week - Flexible Option (Weekly Billing)</option>
-                <option value="monthly">$12.95/week - Most Popular (Monthly Billing)</option>
-                <option value="quarterly">$9.95/week - Lock-In Best Rate (Quarterly Billing-Prepay 13 weeks)</option>
-            </select>
+            <label>Choose Your Plan</label>
+            <div class="plan-buttons" role="group" aria-label="Choose your plan">
+                <a class="pay-btn" id="payWeekly" href="#" role="button">Start Weekly – $14.95/week</a>
+                <a class="pay-btn" id="payMonthly" href="#" role="button">Start Monthly – $12.95/week</a>
+                <a class="pay-btn best" id="payQuarterly" href="#" role="button">Start Quarterly – $9.95/week</a>
+            </div>
+            <p class="inline-help" style="margin-top:10px;">
+                Prefer not to pay online? Call or text <strong>(732) 440-9093</strong> and we’ll enroll you by phone.
+            </p>
 
             <label for="notes">Notes (optional: where cans are located)</label>
             <textarea id="notes" name="notes" rows="4"></textarea>
@@ -459,14 +511,10 @@ It's a preventive safety measure that removes a real burden and helps you stay i
     Your card information is never stored on this website.
 </div>
 
-<input id="finishBtn" type="submit" value="Start My Service">
-<p class="inline-help" style="margin-top:10px;">
-    You can cancel anytime with <strong>one phone call</strong>.
-</p>
-
+<div class="inline-help" style="margin-top:10px;"><strong>Next:</strong> Tap a plan button above to securely complete billing.</div>
 <div id="submitMsg" class="submit-message hidden" role="status" aria-live="polite">
-    <strong>Submitting�</strong>
-    Please do not close this page. If you prefer, you can call or text <strong>(732) 440-9093</strong> and we�ll sign you up by phone.
+    <strong>One moment…</strong>
+    Saving your reservation and opening secure billing.
 </div>
 
             <button type="button" id="backBtn" class="secondary-btn">Back</button>
@@ -486,8 +534,33 @@ It's a preventive safety measure that removes a real burden and helps you stay i
         <p>&copy; 2025 Trash Day Valet. All rights reserved. Making life safer, one trash day at a time.</p>
     </footer>
 
+<!-- Sticky Call/Sign Up bar for mobile -->
+<div class="sticky-cta" aria-label="Quick actions">
+    <a href="tel:+17324409093" id="ctaCall">Call</a>
+    <a href="sms:+17324409093?&body=Hi%20Trash%20Day%20Valet%20-%20I%20want%20to%20sign%20up.%20My%20address%20is%20" id="ctaText">Text</a>
+    <a href="#signup" id="ctaSignup">Sign Up</a>
+</div>
+
 <script>
 (function () {
+    /* ===========================
+       CONFIG — YOU MUST SET THESE
+       =========================== */
+
+    // 1) Google Sheets Web App URL (from Google Apps Script "Deploy > Web app")
+    // Example: https://script.google.com/macros/s/AKfycbx.../exec
+    const SHEETS_WEBAPP_URL = "PASTE_YOUR_GOOGLE_APPS_SCRIPT_WEBAPP_URL_HERE";
+
+    // 2) Stripe Payment Links (create in Stripe Dashboard > Payment Links)
+    const STRIPE_LINKS = {
+        weekly: "PASTE_STRIPE_PAYMENT_LINK_WEEKLY",
+        monthly: "PASTE_STRIPE_PAYMENT_LINK_MONTHLY",
+        quarterly: "PASTE_STRIPE_PAYMENT_LINK_QUARTERLY"
+    };
+
+    /* ===========================
+       DOM
+       =========================== */
     const step1 = document.getElementById('step1');
     const step2 = document.getElementById('step2');
 
@@ -504,10 +577,38 @@ It's a preventive safety measure that removes a real burden and helps you stay i
     const phoneEl = document.getElementById('phone');
 
     const emailEl = document.getElementById('email');
-    const planEl = document.getElementById('plan');
+    const notesEl = document.getElementById('notes');
 
-    const finishBtn = document.getElementById('finishBtn');
+    const payWeekly = document.getElementById('payWeekly');
+    const payMonthly = document.getElementById('payMonthly');
+    const payQuarterly = document.getElementById('payQuarterly');
+
     const submitMsg = document.getElementById('submitMsg');
+
+    const ctaCall = document.getElementById('ctaCall');
+    const ctaText = document.getElementById('ctaText');
+    const ctaSignup = document.getElementById('ctaSignup');
+
+    /* ===========================
+       UTIL
+       =========================== */
+    function safeGtag(eventName, params) {
+        try {
+            if (typeof gtag === 'function') gtag('event', eventName, params || {});
+        } catch (e) {}
+    }
+
+    function getUrlParams() {
+        const p = new URLSearchParams(window.location.search);
+        const obj = {};
+        for (const [k, v] of p.entries()) obj[k] = v;
+        return obj;
+    }
+
+    function normalizePhone(raw) {
+        const digits = (raw || "").replace(/\D/g, "");
+        return digits;
+    }
 
     function setStep(stepNum) {
         if (stepNum === 1) {
@@ -525,117 +626,149 @@ It's a preventive safety measure that removes a real burden and helps you stay i
         }
     }
 
+    function showSubmitting(show) {
+        if (show) submitMsg.classList.remove('hidden');
+        else submitMsg.classList.add('hidden');
+    }
+
     function validateStep1() {
         if (!nameEl.checkValidity()) { nameEl.reportValidity(); return false; }
         if (!addressEl.checkValidity()) { addressEl.reportValidity(); return false; }
-        if (!phoneEl.checkValidity()) { phoneEl.reportValidity(); return false; }
+
+        const digits = normalizePhone(phoneEl.value);
+        if (digits.length < 10) {
+            phoneEl.setCustomValidity("Please enter a 10-digit phone number.");
+            phoneEl.reportValidity();
+            return false;
+        }
+        phoneEl.setCustomValidity("");
         return true;
     }
 
-    function validateStep2Basics() {
-        if (!emailEl.checkValidity()) { emailEl.reportValidity(); return false; }
-        if (!planEl.checkValidity()) { planEl.reportValidity(); return false; }
-        return true;
+    function buildLeadPayload(extra) {
+        const params = getUrlParams();
+        const payload = {
+            ts_iso: new Date().toISOString(),
+            source: "website",
+            name: (nameEl.value || "").trim(),
+            address: (addressEl.value || "").trim(),
+            phone_raw: (phoneEl.value || "").trim(),
+            phone_digits: normalizePhone(phoneEl.value),
+            email: (emailEl.value || "").trim(),
+            notes: (notesEl.value || "").trim(),
+            campaign: params.campaign || params.c || "",
+            batch: params.batch || "",
+            utm_source: params.utm_source || "",
+            utm_medium: params.utm_medium || "",
+            utm_campaign: params.utm_campaign || "",
+            utm_content: params.utm_content || "",
+            utm_term: params.utm_term || "",
+            referrer: document.referrer || "",
+            page: window.location.href
+        };
+        return Object.assign(payload, extra || {});
     }
 
-    reserveBtn.addEventListener('click', function () {
-        if (validateStep1()) setStep(2);
+    async function postToSheets(payload) {
+        if (!SHEETS_WEBAPP_URL || SHEETS_WEBAPP_URL.indexOf("PASTE_") === 0) {
+            // Still let the site function; just skip posting if not configured yet.
+            console.warn("SHEETS_WEBAPP_URL not set. Lead not saved.");
+            return { ok: true, skipped: true };
+        }
+
+        // Use no-cors to avoid CORS pain; Apps Script still receives the POST.
+        // You won't be able to read the response in no-cors mode, so we treat it as success.
+        try {
+            await fetch(SHEETS_WEBAPP_URL, {
+                method: "POST",
+                mode: "no-cors",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(payload)
+            });
+            return { ok: true };
+        } catch (e) {
+            console.error("Lead post failed:", e);
+            return { ok: false, error: String(e) };
+        }
+    }
+
+    /* ===========================
+       FLOW
+       =========================== */
+
+    // Prevent native submit (we control the flow)
+    form.addEventListener('submit', function (e) {
+        e.preventDefault();
+    });
+
+    reserveBtn.addEventListener('click', async function () {
+        if (!validateStep1()) return;
+
+        // Save Step 1 immediately to Sheets
+        showSubmitting(true);
+        safeGtag('tdv_step1_reserve_click', { method: 'web', location: 'step1' });
+
+        const payload = buildLeadPayload({ stage: "reserved" });
+        const res = await postToSheets(payload);
+
+        showSubmitting(false);
+
+        if (!res.ok) {
+            alert("Could not save your reservation right now. Please call or text (732) 440-9093 and we'll sign you up.");
+            safeGtag('tdv_lead_save_error', { message: (res.error || '').slice(0, 100) });
+            return;
+        }
+
+        // Mark locally as reserved
+        try { localStorage.setItem("tdv_reserved", "1"); } catch (e) {}
+
+        setStep(2);
+        safeGtag('tdv_step1_reserved', { saved: true, skipped: !!res.skipped });
     });
 
     backBtn.addEventListener('click', function () {
-        // Reset any submission UI when going back
-        submitMsg.classList.add('hidden');
-        finishBtn.disabled = false;
-        finishBtn.value = "Finish Sign Up (Secure Payment)";
+        showSubmitting(false);
         setStep(1);
+        safeGtag('tdv_back_to_step1', {});
     });
 
-    /* -----------------------------
-       Stripe Checkout-ready wiring
-       -----------------------------
-       This is NOT active by default.
-       To enable later:
-       1) Add Stripe.js script tag in <head>:
-          <script src="https://js.stripe.com/v3/"><\/script>
-       2) Set USE_STRIPE_CHECKOUT = true
-       3) Replace STRIPE_PUBLISHABLE_KEY and PRICE IDs
-       4) Create a tiny backend endpoint to create a Checkout Session
-          (recommended) OR use Payment Links (simpler).
-    */
-    const USE_STRIPE_CHECKOUT = false;
-
-    // Optional: map your plans to Stripe Price IDs (placeholders)
-    const PRICE_ID_MAP = {
-        weekly: "price_REPLACE_WEEKLY",
-        monthly: "price_REPLACE_MONTHLY",
-        quarterly: "price_REPLACE_QUARTERLY"
-    };
-
-    async function startStripeCheckout() {
-        // This is a placeholder approach.
-        // Best practice: call YOUR backend to create a Checkout Session and return sessionId.
-        // Example backend response: { sessionId: "cs_test_..." }
-
-        const chosenPlan = planEl.value;
-        const priceId = PRICE_ID_MAP[chosenPlan];
-
-        if (!priceId) {
-            alert("Please select a plan.");
+    async function startPayment(planKey) {
+        const link = STRIPE_LINKS[planKey] || "";
+        if (!link || link.indexOf("PASTE_") === 0) {
+            alert("Stripe payment link not set yet for this plan. Please call or text (732) 440-9093 to enroll.");
+            safeGtag('tdv_stripe_link_missing', { plan: planKey });
             return;
         }
 
-        // Example: call your backend endpoint to create session
-        // const res = await fetch("/create-checkout-session", {
-        //   method: "POST",
-        //   headers: { "Content-Type": "application/json" },
-        //   body: JSON.stringify({
-        //     name: nameEl.value,
-        //     address: addressEl.value,
-        //     phone: phoneEl.value,
-        //     email: emailEl.value,
-        //     plan: chosenPlan,
-        //     priceId: priceId
-        //   })
-        // });
-        // const data = await res.json();
-        // const stripe = Stripe("pk_live_REPLACE_ME");
-        // await stripe.redirectToCheckout({ sessionId: data.sessionId });
+        // If they somehow jumped to step2 first, still capture them.
+        if (!validateStep1()) return;
 
-        alert("Stripe Checkout is not enabled yet. This site is currently using the basic form submit endpoint.");
+        // Save plan selection to Sheets (2nd row update event)
+        showSubmitting(true);
+        safeGtag('tdv_plan_click', { plan: planKey });
+
+        const payload = buildLeadPayload({ stage: "plan_selected", plan: planKey });
+        await postToSheets(payload);
+
+        // Open Stripe (same tab to reduce confusion)
+        window.location.href = link;
     }
 
-    // On submit: show message, disable button, then either trigger Stripe Checkout or allow normal submit.
-    form.addEventListener('submit', function (e) {
-        // If Step 2 isn't visible, prevent submit
-        if (step2.classList.contains('hidden')) {
-            e.preventDefault();
+    payWeekly.addEventListener('click', function (e) { e.preventDefault(); startPayment('weekly'); });
+    payMonthly.addEventListener('click', function (e) { e.preventDefault(); startPayment('monthly'); });
+    payQuarterly.addEventListener('click', function (e) { e.preventDefault(); startPayment('quarterly'); });
+
+    // Track sticky CTA usage
+    if (ctaCall) ctaCall.addEventListener('click', () => safeGtag('tdv_cta_call', { location: 'sticky' }));
+    if (ctaText) ctaText.addEventListener('click', () => safeGtag('tdv_cta_text', { location: 'sticky' }));
+    if (ctaSignup) ctaSignup.addEventListener('click', () => safeGtag('tdv_cta_signup', { location: 'sticky' }));
+
+    // If they already reserved in this browser, jump them to Step 2 automatically
+    try {
+        if (localStorage.getItem("tdv_reserved") === "1") {
             setStep(2);
-            return;
         }
-
-        if (!validateStep2Basics()) {
-            e.preventDefault();
-            return;
-        }
-
-        // Show processing reassurance immediately
-        submitMsg.classList.remove('hidden');
-        finishBtn.disabled = true;
-        finishBtn.value = "Submitting�";
-
-        if (USE_STRIPE_CHECKOUT) {
-            e.preventDefault(); // prevent normal submit
-            startStripeCheckout()
-              .catch(function () {
-                  // If anything fails, re-enable button and keep reassurance visible
-                  finishBtn.disabled = false;
-                  finishBtn.value = "Finish Sign Up (Secure Payment)";
-              });
-        } else {
-            // Normal form submission continues to your action URL.
-            // No need to preventDefault.
-        }
-    });
+    } catch (e) {}
 })();
 </script>
 </body>
